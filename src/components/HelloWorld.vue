@@ -1,59 +1,155 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <div class="sidenav">
+      <div class="login-main-text">
+        <h2>
+          Agroservicio "El maicero"<br />
+          Inicio de sesión
+        </h2>
+        <p>Sistema de control de inventario</p>
+      </div>
+    </div>
+    <div class="main">
+      <div class="col-md-6 col-sm-12">
+        <div class="login-form">
+          <form v-on:submit.prevent="login">
+            <div class="form-group m-4">
+              <label>Nombre de usuario</label>
+              <input
+                type="text"
+                class="form-control mt-2"
+                placeholder="Nombre de usuario"
+                name="username"
+                v-model="username"
+              />
+            </div>
+            <div class="form-group m-4">
+              <label>Contraseña</label>
+              <input
+                type="password"
+                class="form-control mt-2"
+                placeholder="Contraseña"
+                name="password"
+                v-model="password"
+              />
+            </div>
+            <button type="submit" class="btn btn-black">Iniciar sesión</button>
+          </form>
+          <div class="alert alert-danger mt-3" role="alert" v-if="error">
+            <b>¡Error!</b> {{ errormsg }}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
-    msg: String
-  }
-}
+    msg: String,
+  },
+  data() {
+    return {
+      username: "",
+      password: "",
+      error: false,
+      errormsg: "",
+    };
+  },
+  methods: {
+    login() {
+      let json = {
+        name: this.username,
+        password: this.password,
+      };
+      this.error = false;
+      axios
+        .post("https://backend-control-inv.herokuapp.com/api/users/login", json)
+        .then((data) => {
+          if (data.data.message) {
+            this.error = true;
+            this.errormsg = data.data.message;
+          } else {
+            localStorage.token = data.data.success;
+            this.$router.push('dashboard')
+          }
+        });
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+body {
+  font-family: "Lato", sans-serif;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.main-head {
+  height: 150px;
+  background: #fff;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.sidenav {
+  height: 100%;
+  background-color: #000;
+  overflow-x: hidden;
+  padding-top: 20px;
 }
-a {
-  color: #42b983;
+
+.main {
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .login-form {
+    margin-top: 10%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .main {
+    margin-left: 40%;
+  }
+
+  .sidenav {
+    width: 40%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+  }
+
+  .login-form {
+    margin-top: 80%;
+  }
+
+  .register-form {
+    margin-top: 20%;
+  }
+}
+
+.login-main-text {
+  margin-top: 20%;
+  padding: 60px;
+  color: #fff;
+}
+
+.login-main-text h2 {
+  font-weight: 300;
+}
+
+.btn-black {
+  background-color: #000 !important;
+  color: #fff;
 }
 </style>
