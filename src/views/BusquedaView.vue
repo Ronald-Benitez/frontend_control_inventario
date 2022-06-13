@@ -17,33 +17,24 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in list" :key="product.id">
-            <th scope="row">{{ product.id }}</th>
-            <td>{{ product.name }}</td>
-            <td class="hide">{{ product.type }}</td>
-            <td>{{ product.stock }}</td>
-            <td class="hide">{{ product.price }}</td>
-            <td class="hide">{{ product.min }}</td>
-            <td class="hide">{{ product.max }}</td>
+          <tr>
+            <th scope="row">{{ id }}</th>
+            <td>{{ name }}</td>
+            <td class="hide">{{ type }}</td>
+            <td>{{ stock }}</td>
+            <td class="hide">{{ price }}</td>
+            <td class="hide">{{ min }}</td>
+            <td class="hide">{{ max }}</td>
             <td>
-              <button
-                class="btn btn-dark text-info"
-                v-on:click="disminuir(product.id)"
-              >
+              <button class="btn btn-dark text-info" v-on:click="disminuir(id)">
                 -
               </button>
-              <button
-                class="btn btn-dark text-info"
-                v-on:click="aumentar(product.id)"
-              >
+              <button class="btn btn-dark text-info" v-on:click="aumentar(id)">
                 +
               </button>
             </td>
             <td v-if="tipo">
-              <button
-                class="btn btn-dark text-warning"
-                v-on:click="edit(product.id)"
-              >
+              <button class="btn btn-dark text-warning" v-on:click="edit(id)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -57,10 +48,7 @@
                   />
                 </svg>
               </button>
-              <button
-                class="btn btn-dark text-danger"
-                v-on:click="delet(product.id)"
-              >
+              <button class="btn btn-dark text-danger" v-on:click="delet(id)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -82,6 +70,7 @@
           </tr>
         </tbody>
       </table>
+      <button class="btn btn-dark mt-3 mx-2 px-4" v-on:click="back()">Regresar</button>
     </div>
     <FooterView />
   </div>
@@ -96,6 +85,14 @@ export default {
   data() {
     return {
       list: null,
+      id: "",
+      min: "",
+      max: "",
+      stock: "",
+      price: "",
+      name: "",
+      type: "",
+      busqueda: null,
       tipo: false,
     };
   },
@@ -104,18 +101,29 @@ export default {
     FooterView,
   },
   mounted: function () {
-    let url = "https://backend-control-inv.herokuapp.com/api/products";
+    this.busqueda = this.$route.params.name;
     axios
-      .get(url, {
-        headers: {
-          "user-token": localStorage.token,
-        },
-      })
+      .get(
+        "https://backend-control-inv.herokuapp.com/api/products/name/" +
+          this.busqueda,
+        {
+          headers: {
+            "user-token": localStorage.token,
+          },
+        }
+      )
       .then((data) => {
         if (data.data.error) {
           alert("¡Error! " + data.data.error);
         } else {
           this.list = data.data;
+          this.id = data.data.id;
+          this.min = data.data.min;
+          this.max = data.data.max;
+          this.stock = data.data.stock;
+          this.price = data.data.price;
+          this.name = data.data.name;
+          this.type = data.data.type;
           if (localStorage.type == "admin") {
             this.tipo = true;
           }
@@ -157,7 +165,8 @@ export default {
               "https://backend-control-inv.herokuapp.com/api/products/increase/" +
                 id +
                 "&" +
-                value2,{},
+                value2,
+              {},
               {
                 headers: {
                   "user-token": localStorage.token,
@@ -172,7 +181,7 @@ export default {
               } else {
                 alert("Stock aumentado con éxito");
                 this.list = data.data;
-                console.log(data.data);
+                this.$router.push("/edit/" + this.id);
               }
             });
         } catch (err) {
@@ -192,7 +201,8 @@ export default {
               "https://backend-control-inv.herokuapp.com/api/products/decrease/" +
                 id +
                 "&" +
-                value2,{},
+                value2,
+              {},
               {
                 headers: {
                   "user-token": localStorage.token,
@@ -202,11 +212,12 @@ export default {
             .then((data) => {
               if (data.data.message) {
                 alert("¡Error! " + data.data.message);
-              }else if (data.data.error) {
+              } else if (data.data.error) {
                 alert("¡Error! " + data.data.error);
               } else {
                 alert("Stock disminuido con éxito");
                 this.list = data.data;
+                this.$router.push("/edit/" + this.id);
               }
             });
         } catch (err) {
@@ -216,6 +227,9 @@ export default {
         alert("Debe ingresar un valor");
       }
     },
+    back(){
+        this.$router.push('/dashboard')
+    }
   },
 };
 </script>

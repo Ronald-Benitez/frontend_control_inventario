@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Dashboard from '../views/Dashboard.vue'
 import EditView from '../views/EditView.vue'
 import AddView from '../views/AddView.vue'
+import BusquedaView from '../views/BusquedaView.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path:'/add',
     name:'AddView',
     component: AddView
+  },
+  {
+    path:'/busqueda/:name',
+    name:'BusquedaView',
+    component: BusquedaView
   }
 
 ]

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <HeaderView />
     <div class="container px-4">
       <form v-on:submit.prevent="addPro()" class="form-horizontal mt-5 px-4">
@@ -131,5 +131,9 @@ export default {
 <style scoped>
 .form-group {
   text-align: left;
+}
+.main{
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
 </style>
