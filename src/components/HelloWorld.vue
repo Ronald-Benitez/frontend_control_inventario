@@ -33,7 +33,7 @@
                 v-model="password"
               />
             </div>
-            <button type="submit" class="btn btn-black">Iniciar sesión</button>
+            <button type="submit" class="btn btn-dark">Iniciar sesión</button>
           </form>
           <div class="alert alert-danger mt-3" role="alert" v-if="error">
             <b>¡Error!</b> {{ errormsg }}
@@ -74,6 +74,7 @@ export default {
             this.errormsg = data.data.message;
           } else {
             localStorage.token = data.data.success;
+            localStorage.type = data.data.type;
             this.$router.push('dashboard')
           }
         });
