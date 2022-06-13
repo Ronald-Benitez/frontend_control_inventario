@@ -115,7 +115,7 @@ export default {
     FooterView,
   },
   mounted: function () {
-    let url = "https://backend-control-inv.herokuapp.com/api/products";
+    let url = "https://backend-control-inv.herokuapp.com/api/products/min";
     axios
       .get(url, {
         headers: {

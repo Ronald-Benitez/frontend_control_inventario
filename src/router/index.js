@@ -4,6 +4,8 @@ import Dashboard from '../views/Dashboard.vue'
 import EditView from '../views/EditView.vue'
 import AddView from '../views/AddView.vue'
 import BusquedaView from '../views/BusquedaView.vue'
+import MayorView from '../views/MayorView.vue'
+import MenorView from '../views/MenorView.vue'
 
 const routes = [
   {
@@ -30,6 +32,16 @@ const routes = [
     path:'/busqueda/:name',
     name:'BusquedaView',
     component: BusquedaView
+  },
+  {
+    path:'/menor',
+    name:'MenorView',
+    component: MenorView
+  },
+  {
+    path:'/mayor',
+    name:'MayorView',
+    component: MayorView
   }
 
 ]
