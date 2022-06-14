@@ -55,18 +55,27 @@
           <small> Agregar producto</small>
         </a>
       </div>
-      <form class="d-flex flex-row" v-on:submit.prevent="buscar()">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          v-model="busqueda"
-        />
-        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-          Search
-        </button>
-      </form>
+      <div
+        class="btn btn-dark d-flex align-items-center"
+        v-on:click="buscar()"
+      >
+        <a class="text-light navbar-brand">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-search"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+            />
+          </svg>
+          <small> Buscar producto</small>
+        </a>
+      </div>
+  
     </nav>
   </div>
 </template>
@@ -76,11 +85,11 @@ export default {
   name: "HeaderView",
   data() {
     return {
-      busqueda: "",
-      tipo: false
+      tipo: false,
     };
-  },mounted() {
-    if(localStorage.type == "admin"){
+  },
+  mounted() {
+    if (localStorage.type == "admin") {
       this.tipo = true;
     }
   },
@@ -92,11 +101,12 @@ export default {
       this.$router.push("/dashboard");
     },
     buscar() {
-      this.$router.push("/busqueda/" + this.busqueda);
+      const busqueda = prompt("Ingrese el nombre del producto");
+      this.$router.push("/busqueda/" + busqueda);
     },
-    Usuarios(){
+    Usuarios() {
       this.$router.push("/usuarios");
-    }
+    },
   },
 };
 </script>
@@ -115,6 +125,18 @@ export default {
 }
 
 @media screen and (max-width: 720px) {
+  small {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .form-control {
+    height: 40px;
+    width: 100px;
+    align-self: center;
+    margin-right: 6px;
+  }
   small {
     display: none;
   }
