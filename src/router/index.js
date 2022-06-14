@@ -6,6 +6,9 @@ import AddView from '../views/AddView.vue'
 import BusquedaView from '../views/BusquedaView.vue'
 import MayorView from '../views/MayorView.vue'
 import MenorView from '../views/MenorView.vue'
+import UsuariosView from '../views/UsuariosView.vue'
+import AddUserView from '../views/AddUserView.vue'
+import EditUserView from '../views/EditUserView.vue'
 
 const routes = [
   {
@@ -42,6 +45,21 @@ const routes = [
     path:'/mayor',
     name:'MayorView',
     component: MayorView
+  },
+  {
+    path:'/usuarios',
+    name:'UsuariosView',
+    component: UsuariosView
+  },
+  {
+    path:'/adduser',
+    name:'AddUserView',
+    component: AddUserView
+  },
+  {
+    path:'/edituser/:id',
+    name:'EditUserView',
+    component: EditUserView
   }
 
 ]
