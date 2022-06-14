@@ -70,7 +70,9 @@
           </tr>
         </tbody>
       </table>
-      <button class="btn btn-dark mt-3 mx-2 px-4" v-on:click="back()">Regresar</button>
+      <button class="btn btn-dark mt-3 mx-2 px-4" v-on:click="back()">
+        Regresar
+      </button>
     </div>
     <FooterView />
   </div>
@@ -113,20 +115,26 @@ export default {
         }
       )
       .then((data) => {
-        if (data.data.error) {
-          alert("¡Error! " + data.data.error);
-        } else {
-          this.list = data.data;
-          this.id = data.data.id;
-          this.min = data.data.min;
-          this.max = data.data.max;
-          this.stock = data.data.stock;
-          this.price = data.data.price;
-          this.name = data.data.name;
-          this.type = data.data.type;
-          if (localStorage.type == "admin") {
-            this.tipo = true;
+        if(data.data){
+          if (data.data.error) {
+            alert("¡Error! " + data.data.error);
+          } else {
+            this.list = data.data;
+            this.id = data.data.id;
+            this.min = data.data.min;
+            this.max = data.data.max;
+            this.stock = data.data.stock;
+            this.price = data.data.price;
+            this.name = data.data.name;
+            this.type = data.data.type;
+            if (localStorage.type == "admin") {
+              this.tipo = true;
+            }
           }
+          console.log(" ");
+        }else{
+          alert("¡Error! No se encontró el producto");
+          this.$router.push("/dashboard");
         }
       });
   },
