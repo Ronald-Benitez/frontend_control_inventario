@@ -163,7 +163,7 @@ export default {
             })
             .then((data) => {
               if (data.data.errors) {
-                alert("¡Error! " + data.data.errors);
+                alert("¡Error! " + data.data.errors[0].msg);
               } else {
                 alert("Contraseña cambiada con éxito");
                 this.list = data.data;

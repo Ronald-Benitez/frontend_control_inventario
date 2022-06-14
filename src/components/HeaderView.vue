@@ -80,11 +80,8 @@ export default {
       tipo: false
     };
   },mounted() {
-    this.tipo = localStorage.getItem("tipo");
-    if(this.tipo == "admin"){
+    if(localStorage.type == "admin"){
       this.tipo = true;
-    }else{
-      this.tipo = false;
     }
   },
   methods: {
