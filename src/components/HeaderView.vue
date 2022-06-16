@@ -35,6 +35,7 @@
       <div
         class="btn btn-dark d-flex align-items-center"
         v-on:click="newProduct()"
+        v-if="tipo"
       >
         <a class="text-light navbar-brand">
           <svg
