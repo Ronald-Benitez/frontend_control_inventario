@@ -26,7 +26,7 @@
         <div class="form-group mt-3">
           <label for="" class="form-label">Contraseña</label>
           <input
-            type="text"
+            type="password"
             class="form-control"
             placeholder="Contraseña"
             v-model="form.password"
