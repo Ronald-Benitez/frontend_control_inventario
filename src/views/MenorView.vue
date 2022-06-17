@@ -33,7 +33,7 @@
             <td>{{ product.name }}</td>
             <td class="hide">{{ product.type }}</td>
             <td>{{ product.stock }}</td>
-            <td class="hide">{{ product.price }}</td>
+            <td class="hide">${{ product.price }}</td>
             <td class="hide">{{ product.min }}</td>
             <td class="hide">{{ product.max }}</td>
             <td>
